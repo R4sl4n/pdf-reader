@@ -1,30 +1,33 @@
-const express = require('express')
-const cors = require('cors')
-require('dotenv').config()
+const express = require("express");
+const cors = require("cors");
+require("dotenv").config();
 
-const sequelize = require('./config/db')
+const sequelize = require("./config/db");
+const Book = require("./models/Book");
 
-const app = express()
+const app = express();
 
-app.use(cors())
-app.use(express.json())
+app.use(cors());
+app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.json({ message: 'Server is running' })
-})
+app.get("/", (req, res) => {
+  res.json({ message: "Server is running" });
+});
 
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 5000;
 
 const start = async () => {
   try {
-    await sequelize.authenticate()
-    console.log('Database connected')
+    await sequelize.authenticate();
+    await sequelize.sync();
+    console.log("Models synced");
+    console.log("Database connected");
     app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`)
-    })
+      console.log(`Server running on port ${PORT}`);
+    });
   } catch (e) {
-    console.log('Database error:', e.message)
+    console.log("Database error:", e.message);
   }
-}
+};
 
-start()
+start();
