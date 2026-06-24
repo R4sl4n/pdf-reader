@@ -33,21 +33,23 @@ body {
   background: linear-gradient(to bottom, #666, #333);
   transform: translateY(-1px);
 }
-
-.btn-green {
-  background: linear-gradient(to bottom, #a8e063, #78c800);
-  color: #1a1a1a;
-  border: 1px solid #5a9e00;
-  box-shadow: 0 4px 0 #3d7000, 0 6px 8px rgba(0,0,0,0.4);
-  padding: 12px 28px;
-  border-radius: 50px;
-  font-weight: 700;
-  font-size: 15px;
+ .btn-green {
+  background: linear-gradient(135deg, #8b1a2e, #5c0f1e);
+  color: white;
+  border: 1px solid #3d0a14;
+  box-shadow: 0 2px 12px rgba(139,26,46,0.4);
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  transition: all 0.2s;
 }
 
 .btn-green:hover {
-  background: linear-gradient(to bottom, #b8f073, #88d800);
+  background: linear-gradient(135deg, #a02035, #6e1224);
   transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(139,26,46,0.6);
 }
 
 .card {

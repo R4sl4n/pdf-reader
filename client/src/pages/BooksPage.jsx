@@ -10,26 +10,36 @@ const BooksPage = () => {
   }, []);
 
   return (
-    <div className="p-8">
-      <h1 className="text-3xl font-bold mb-8 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+    <div style={{ padding: '40px' }}>
+      <h1 style={{ 
+        fontSize: '32px', 
+        fontWeight: 'bold', 
+        marginBottom: '32px',
+        color: 'rgba(255,255,255,0.9)',
+        letterSpacing: '1px'
+      }}>
         My Books
       </h1>
-      <div className="grid grid-cols-3 gap-6">
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px' }}>
         {books.map(book => (
-          <div key={book.id} className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:border-purple-500 transition-all">
-            <h3 className="text-lg font-semibold mb-1">{book.title}</h3>
-            <p className="text-gray-400 text-sm mb-4">{book.author}</p>
+          <div key={book.id} className="card" style={{ transition: 'all 0.2s' }}>
+            <h3 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '6px' }}>
+              {book.title}
+            </h3>
+            <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '14px', marginBottom: '20px' }}>
+              {book.author}
+            </p>
             <Link
               to={`/book/${book.filePath.split('\\').pop()}`}
-              className="inline-block bg-gradient-to-r from-purple-500 to-blue-500 text-white px-5 py-2 rounded-xl font-medium hover:opacity-80 transition-all"
+              className="btn btn-green"
             >
-              Read →
+              Читать →
             </Link>
           </div>
         ))}
       </div>
     </div>
-  )
+  );
 };
 
 export default BooksPage;
