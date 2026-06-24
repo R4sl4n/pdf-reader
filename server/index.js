@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
-
+const ttsRoutes = require('./routes/ttsRoutes')
 const sequelize = require("./config/db");
 const Book = require("./models/Book");
 const bookRoutes = require('./routes/bookRoutes')
@@ -12,6 +12,7 @@ app.use(cors());
 app.use(express.json());
 app.use('/uploads', express.static('uploads'))
 app.use('/api', bookRoutes)
+app.use('/api', ttsRoutes)
 
 app.get("/", (req, res) => {
   res.json({ message: "Server is running" });
