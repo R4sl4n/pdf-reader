@@ -1,4 +1,5 @@
 const Book = require('../models/Book')
+const upload = require('../config/multer')
 
 const getBooks = async (req, res) => {
   try {
@@ -11,7 +12,8 @@ const getBooks = async (req, res) => {
 
 const createBook = async (req, res) => {
   try {
-    const { title, author, filePath } = req.body
+    const { title, author } = req.body
+    const filePath = req.file.path
     const book = await Book.create({ title, author, filePath })
     res.json(book)
   } catch (e) {
@@ -19,4 +21,4 @@ const createBook = async (req, res) => {
   }
 }
 
-module.exports = { getBooks, createBook }
+module.exports = { getBooks, createBook, upload }
