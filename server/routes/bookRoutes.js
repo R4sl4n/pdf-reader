@@ -1,5 +1,5 @@
 const Router = require('express').Router
-const { getBooks, createBook } = require('../controllers/bookController')
+const { getBooks, createBook, upload } = require('../controllers/bookController')
 
 const router = new Router()
 
