@@ -1,24 +1,24 @@
-import { useState } from 'react'
-import API from '../api/index'
+import { useState } from "react";
+import API from "../api/index";
 
 const UploadPage = () => {
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [file, setFile] = useState(null)
+  const [title, setTitle] = useState("");
+  const [author, setAuthor] = useState("");
+  const [file, setFile] = useState(null);
 
   const handleSubmit = async () => {
     try {
-      const formData = new FormData()
-      formData.append('title', title)
-      formData.append('author', author)
-      formData.append('file', file)
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("author", author);
+      formData.append("file", file);
 
-      await API.post('/api/books', formData)
-      alert('Book uploaded!')
+      await API.post("/api/books", formData);
+      alert("Book uploaded!");
     } catch (e) {
-      alert(e.message)
+      alert(e.message);
     }
-  }
+  };
 
   return (
     <div>
@@ -27,22 +27,24 @@ const UploadPage = () => {
         type="text"
         placeholder="Title"
         value={title}
-        onChange={e => setTitle(e.target.value)}
+        onChange={(e) => setTitle(e.target.value)}
       />
       <input
         type="text"
         placeholder="Author"
         value={author}
-        onChange={e => setAuthor(e.target.value)}
+        onChange={(e) => setAuthor(e.target.value)}
       />
       <input
         type="file"
         accept=".pdf"
-        onChange={e => setFile(e.target.files[0])}
+        onChange={(e) => setFile(e.target.files[0])}
       />
-      <button onClick={handleSubmit}>Upload</button>
+      <button onClick={handleSubmit} className="btn btn-dark">
+        Загрузка
+      </button>
     </div>
-  )
-}
+  );
+};
 
-export default UploadPage
+export default UploadPage;
