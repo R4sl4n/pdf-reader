@@ -5,6 +5,7 @@ import API from "../api/index";
 
 const BooksPage = () => {
   const [books, setBooks] = useState([]);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     API.get("/api/books").then((res) => setBooks(res.data));
@@ -15,6 +16,11 @@ const BooksPage = () => {
     setBooks(books.filter((b) => b.id !== id));
   };
 
+  const filtered = books.filter(
+    (b) =>
+      b.title.toLowerCase().includes(search.toLowerCase()) ||
+      b.author.toLowerCase().includes(search.toLowerCase()),
+  );
   return (
     <div style={{ padding: "24px" }}>
       <h1
@@ -27,6 +33,23 @@ const BooksPage = () => {
       >
         My Books
       </h1>
+      <input
+        type="text"
+        placeholder="Search books..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        style={{
+          marginBottom: "16px",
+          padding: "8px 14px",
+          borderRadius: "8px",
+          border: "1px solid rgba(255,255,255,0.1)",
+          background: "rgba(255,255,255,0.05)",
+          color: "white",
+          width: "300px",
+          fontSize: "13px",
+          outline: "none",
+        }}
+      />
       <div
         style={{
           display: "grid",
@@ -34,7 +57,7 @@ const BooksPage = () => {
           gap: "12px",
         }}
       >
-        {books.map((book) => (
+        {filtered.map((book) => (
           <div
             key={book.id}
             style={{
