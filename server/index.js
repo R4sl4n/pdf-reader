@@ -5,6 +5,9 @@ const ttsRoutes = require('./routes/ttsRoutes')
 const sequelize = require("./config/db");
 const Book = require("./models/Book");
 const bookRoutes = require('./routes/bookRoutes')
+const User = require('./models/User')
+const authRoutes = require('./routes/authRoutes')
+
 
 const app = express();
 
@@ -13,6 +16,7 @@ app.use(express.json());
 app.use('/uploads', express.static('uploads'))
 app.use('/api', bookRoutes)
 app.use('/api', ttsRoutes)
+app.use('/api', authRoutes)
 
 app.get("/", (req, res) => {
   res.json({ message: "Server is running" });

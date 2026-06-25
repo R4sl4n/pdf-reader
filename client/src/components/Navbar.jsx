@@ -1,6 +1,14 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Navbar = () => {
+  const navigate = useNavigate()
+
+  // выход из аккаунта
+  const logout = () => {
+    localStorage.removeItem('token')
+    navigate('/auth')
+  }
+
   return (
     <nav style={{ 
       background: 'rgba(0,0,0,0.4)', 
@@ -13,6 +21,9 @@ const Navbar = () => {
     }}>
       <Link to="/" className="btn btn-dark">My Books</Link>
       <Link to="/upload" className="btn btn-dark">Upload Book</Link>
+      <div style={{ marginLeft: 'auto' }}>
+        <button className="btn btn-dark" onClick={logout}>Logout</button>
+      </div>
     </nav>
   )
 }
