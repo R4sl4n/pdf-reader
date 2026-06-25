@@ -13,9 +13,7 @@ const ReaderPage = () => {
   const [pageText, setPageText] = useState("");
   const [rate, setRate] = useState(1);
 
-  const onDocumentLoadSuccess = ({ numPages }) => {
-    setNumPages(numPages);
-  };
+  const onDocumentLoadSuccess = ({ numPages }) => setNumPages(numPages);
 
   const onPageLoadSuccess = async (page) => {
     const textContent = await page.getTextContent();
@@ -27,50 +25,55 @@ const ReaderPage = () => {
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(pageText);
     utterance.lang = "ru-RU";
-    utterance.rate = rate; // скорость (0.5 - 2)
-    utterance.pitch = 1; // тон голоса (0 - 2)
-    utterance.volume = 1; // громкость (0 - 1)
+    utterance.rate = rate;
+    utterance.pitch = 1;
+    utterance.volume = 1;
     window.speechSynthesis.speak(utterance);
   };
 
-  const stopSpeaking = () => {
-    window.speechSynthesis.cancel();
-  };
+  const stopSpeaking = () => window.speechSynthesis.cancel();
 
   return (
-    <div>
-      <Document
-        file={`http://localhost:5000/uploads/${id}`}
-        onLoadSuccess={onDocumentLoadSuccess}
-      >
-        <Page pageNumber={pageNumber} onLoadSuccess={onPageLoadSuccess} />
-      </Document>
-      <p>
-        Page {pageNumber} of {numPages}
-      </p>
-      <button
-        onClick={() => setPageNumber((p) => p - 1)}
-        disabled={pageNumber <= 1}
-      >
-        Previous
-      </button>
-      <button
-        onClick={() => setPageNumber((p) => p + 1)}
-        disabled={pageNumber >= numPages}
-      >
-        Next
-      </button>
-      <button onClick={speak}>🔊 Listen</button>
-      <button onClick={stopSpeaking}>⏹ Stop</button>
-      <input
-        type="range"
-        min="0.5"
-        max="5"
-        step="0.1"
-        value={rate}
-        onChange={(e) => setRate(Number(e.target.value))}
-      />
-      <span>Speed: {rate}</span>
+    <div style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 60px)' }}>
+      
+      {/* Панель управления */}
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '12px',
+        padding: '12px 24px',
+        background: 'rgba(0,0,0,0.4)',
+        backdropFilter: 'blur(10px)',
+        borderBottom: '1px solid rgba(255,255,255,0.05)',
+        flexShrink: 0
+      }}>
+        <button className="btn btn-dark" onClick={() => setPageNumber(p => p - 1)} disabled={pageNumber <= 1}>← Prev</button>
+        <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '14px' }}>
+          {pageNumber} / {numPages}
+        </span>
+        <button className="btn btn-dark" onClick={() => setPageNumber(p => p + 1)} disabled={pageNumber >= numPages}>Next →</button>
+        
+        <div style={{ width: '1px', height: '24px', background: 'rgba(255,255,255,0.1)', margin: '0 4px' }} />
+        
+        <button className="btn btn-green" onClick={speak}>🔊 Listen</button>
+        <button className="btn btn-dark" onClick={stopSpeaking}>⏹ Stop</button>
+        
+        <div style={{ width: '1px', height: '24px', background: 'rgba(255,255,255,0.1)', margin: '0 4px' }} />
+        
+        <input type="range" min="0.5" max="2" step="0.1" value={rate} onChange={e => setRate(Number(e.target.value))} style={{ width: '80px' }} />
+        <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '13px' }}>Speed: {rate}</span>
+      </div>
+
+      {/* PDF */}
+      <div style={{ flex: 1, overflow: 'auto', display: 'flex', justifyContent: 'center', padding: '24px' }}>
+        <Document
+          file={`http://localhost:5000/uploads/${id}`}
+          onLoadSuccess={onDocumentLoadSuccess}
+        >
+          <Page pageNumber={pageNumber} onLoadSuccess={onPageLoadSuccess} />
+        </Document>
+      </div>
+
     </div>
   );
 };
