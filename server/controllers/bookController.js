@@ -21,4 +21,16 @@ const createBook = async (req, res) => {
   }
 }
 
-module.exports = { getBooks, createBook, upload }
+const updatePage = async (req, res) => {
+  try {
+    const { id } = req.params
+    const { currentPage } = req.body
+    await Book.update({ currentPage }, { where: { id } })
+    res.json({ message: 'Страница обновлена' })
+  } catch (e) {
+    res.status(500).json({ message: e.message })
+  }
+}
+
+module.exports = { getBooks, createBook, upload, updatePage }
+
