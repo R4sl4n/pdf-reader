@@ -32,5 +32,16 @@ const updatePage = async (req, res) => {
   }
 }
 
-module.exports = { getBooks, createBook, upload, updatePage }
+const deleteBook = async (req, res) => {
+  try {
+    const { id } = req.params
+    await Book.destroy({ where: { id } })
+    res.json({ message: 'Book deleted' })
+  } catch (e) {
+    res.status(500).json({ message: e.message })
+  }
+}
+
+module.exports = { getBooks, createBook, upload, updatePage, deleteBook }
+
 
